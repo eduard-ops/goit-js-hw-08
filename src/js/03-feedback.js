@@ -29,16 +29,13 @@ function onTextFormInputs(e) {
 function populateForm() {
   const savedMessage = localStorage.getItem(STORAGE_KEY);
   const parcel = JSON.parse(savedMessage);
-  if (savedMessage == undefined || savedMessage == null) {
-    return;
-  }
+  if (parcel.message === undefined && parcel.email === undefined) return;
   formEl.elements.message.value = parcel.message;
   formEl.elements.email.value = parcel.email;
 }
 
 function checks() {
   if (formEl.elements.message.value === '' || formEl.elements.email.value === '') {
-    alert('Заполни все поля, пожалуйста 😉');
   } else {
     console.log(formData);
   }
