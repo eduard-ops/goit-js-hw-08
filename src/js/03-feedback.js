@@ -20,6 +20,7 @@ function onFormSubmit(evt) {
   localStorage.removeItem(STORAGE_KEY);
   formEl.reset();
   console.log(formData);
+  btnDisable();
 }
 
 function onTextFormInputs(e) {
