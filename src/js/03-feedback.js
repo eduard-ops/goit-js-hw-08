@@ -6,11 +6,14 @@ const formData = {};
 
 const formEl = document.querySelector('.feedback-form');
 
+const btnEl = document.querySelector('button');
+
 formEl.addEventListener('submit', onFormSubmit);
 
 formEl.addEventListener('input', throttle(onTextFormInputs, 500));
 
 populateForm();
+btnDisable();
 
 function onFormSubmit(evt) {
   evt.preventDefault();
@@ -22,15 +25,20 @@ function onFormSubmit(evt) {
 function onTextFormInputs(e) {
   formData[e.target.name] = e.target.value;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+  btnDisable();
 }
 
 function populateForm() {
   const savedMessage = localStorage.getItem(STORAGE_KEY);
-  const parcel = JSON.parse(savedMessage);
-  if (parcel) {
-    formEl.elements.message.value = parcel.message || '';
-    formEl.elements.email.value = parcel.email || '';
+  const parsed = JSON.parse(savedMessage);
+  if (parsed) {
+    formData.email = parsed.email;
+    formData.message = parsed.message;
+    formEl.elements.message.value = parsed.message || '';
+    formEl.elements.email.value = parsed.email || '';
   }
 }
 
-populateForm();
+function btnDisable() {
+  btnEl.disabled = formEl.elements.message.value === '' || formEl.elements.email.value === '';
+}
